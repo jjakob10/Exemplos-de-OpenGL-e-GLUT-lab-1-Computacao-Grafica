@@ -28,20 +28,24 @@ void mouse(int button, int state, int x, int y)
    float y_rel = 1.0 - (y / (float)TAMANHO_JANELA);
    if (!state)
    {
+      float min_dir = 2, dir;
       for (int i = 0; i < 4; i++)
       {
-         float min_dir = 2, dir;
-         if ((dir = dist(ctrlpoints[i][0], ctrlpoints[i][1], x_rel, y_rel)) < max_dir && dir < min_dir)
+         if ((dir = dist(ctrlpoints[i][0], ctrlpoints[i][1], x_rel, y_rel)) < max_dir)
          {
-            current_drag = i;
-            min_dir = dir;
+            if (dir < min_dir)
+            {
+               current_drag = i;
+               min_dir = dir;
+            }
          }
+         // printf("dir %d %f\n", i, dir);
          // printf("dir %f max_dir %f min_dir %f\n ", dir, max_dir, min_dir);
       }
    }
    else
       current_drag = -1;
-
+   // printf("drag %d\n", current_drag);
    // printf("current drag: %d\n", current_drag);
 }
 
